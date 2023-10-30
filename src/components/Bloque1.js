@@ -10,6 +10,26 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
+import BasicModal from './../App';
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
+
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -25,14 +45,18 @@ function createData(name, calories, fat, carbs, protein) {
     createData('102C', 356, 16.0, 49, 3.9),
   ];
 
+
+ 
   
   export default function BasicTable() {
+   
     
     return (
 
       <TableContainer component={Paper} className='table' >
         
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className='table' >
+          
           <TableHead  >
               <h1>Reporte de Bloque 1</h1>
             <TableRow  >

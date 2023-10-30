@@ -23,7 +23,28 @@ export const Layout = () => {
               <Link to='/kutter' class='nav-link'>
                 Kutter
               </Link>
+              
+
             </div>
+            {/* <div class="sesionButtons">
+                <Link to='/login' class='nav-link'>
+                  Iniciar sesion
+                </Link>
+                <Link to='/kutter' class='nav-link'>
+                  Registrarse
+                </Link>
+              </div> */}
+              <div>
+             
+                {/* <Link to='/kutter' class='nav-link'>
+                    Registrarse
+                </Link> */}
+              </div>
+              <div class="navbar-nav">
+              <Link to='/login' class='nav-l'>
+                  Iniciar sesion
+                </Link>
+                </div>
       </nav>
 
       <Outlet />
