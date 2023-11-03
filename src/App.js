@@ -22,6 +22,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useEffect } from 'react';
 
 const style = {
   position: 'absolute',
@@ -36,6 +37,14 @@ const style = {
 };
 
 function App() {
+  const [data, setData] = React.useState([])
+  useEffect(()=> {
+    fetch('http://localhost:8081/bloque1')
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  }, [])
+  
   return (
     <div>
       <Routes>
@@ -51,7 +60,7 @@ function App() {
 
     </div>
   );
-}
+  }
 
 function BasicModal() {
   const [open, setOpen] = React.useState(false);
