@@ -48,7 +48,7 @@ function createData(name, calories, fat, carbs, protein) {
 
  
   
-  export default function BasicTable() {
+  export default function App() {
    
     
     return (
