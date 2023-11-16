@@ -12,15 +12,15 @@ const db = mysql.createConnection({
     host: "localhost",
     user:"root",
     password:"",
-    database:"areas"
+    database:"resumen-lineas"
 })
 
 app.get('/', (re, res)=> {
     return res.json("From backend side");
 })
 
-app.get('/Bloque1', (req, res)=> {
-    const sql = "SELECT * FROM Bloque1";
+app.get('/bloque1', (req, res)=> {
+    const sql = "SELECT * FROM bloque1";
     db.query(sql, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);

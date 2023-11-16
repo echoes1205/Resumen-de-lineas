@@ -25,7 +25,7 @@ function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8081/Bloque1')
+    fetch('http://localhost:8081/bloque1')
       .then(res => res.json())
       .then(data => setData(data))
       .catch(err => console.log(err));
@@ -45,26 +45,8 @@ function App() {
       </Routes>
 
       <table>
-        <thead>
-          <tr>
-            <th>Linea</th>
-            <th>Cantidad de ordenes</th>
-            <th>Horas ganadas</th>
-            <th>Cantidad de defectos</th>
-            <th>Cumpliendo OPF</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((d, i) => (
-            <tr key={i}>
-              <td>{d.linea}</td>
-              <td>{d.ordenes}</td>
-              <td>{d.horas}</td>
-              <td>{d.defectos}</td>
-              <td>{d.opf}</td>
-            </tr>
-          ))}
-        </tbody>
+   
+   
       </table>
     </div>
   );

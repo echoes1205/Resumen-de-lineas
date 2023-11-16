@@ -4,3 +4,27 @@
     padding-top: 15px;
     padding-bottom: 15px;
 }
+.title{
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    font-size:29px;
+    font-family: system-ui;
+
+    padding: 25px;
+}
+thead{
+    background-color: rgb(168, 202, 235);
+    font-weight: bolder;
+    font-family: system-ui;
+}
+
+.tabla-lineas{
+    padding: 60px;
+}
+.editbutton{
+    margin-left: auto;
+    display: flex;
+    height: 30px;
+    width: 30px;
+}
