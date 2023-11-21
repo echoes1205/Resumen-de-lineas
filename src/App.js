@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from "./components/Layout";
-import Bloque1 from "./components/Bloque1";
-import Bloque2 from "./components/Bloque2";
-import Flow from "./components/Flow";
-import Kutter from "./components/Kutter";
-import Home from "./components/Home";
-import Login from "./components/Login";
+import Bloque1 from "./components/Bloque1.js";
+import Bloque2 from "./components/Bloque2.js";
+import Flow from "./components/Flow.js";
+import Kutter from "./components/Kutter.js";
+import Home from "./components/Home.js";
+import Login from "./components/Login.js";
 import './App.css';
 
 const style = {
