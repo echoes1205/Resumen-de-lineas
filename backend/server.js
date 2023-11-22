@@ -28,5 +28,5 @@ app.get('/bloque1', (req, res)=> {
 })
 
 app.listen(8081, ()=> {
-    console.log("listening");
+    console.log("Servidor corriendo en http://localhost:8081/");
 })
