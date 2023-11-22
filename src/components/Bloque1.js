@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Bloque1.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Table from 'react-bootstrap/Table';
@@ -73,6 +74,77 @@ function App() {
 
     handleInsert(nuevoRegistro);
   };
+
+  // async function update() {
+  //   const id = document.getElementById("id").value;
+  //   const data = {
+  //     ordenes: document.getElementById("ordenes").value,
+  //     horas: document.getElementById("horas").value,
+  //     defectos: document.getElementById("defectos").value,
+  //     opf: document.getElementById("opf").value,
+  //   };
+  
+  //   try {
+  //     const response = await fetch(`http://localhost:8081/bloque1/${id}`, {
+  //       method: "PUT",
+  //       body: JSON.stringify(data),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  
+  //     const value = response?.status;
+  
+  //     if (value === 200) {
+  //       // La solicitud se realizó correctamente
+  //       alert("Registro actualizado correctamente");
+  //     } else {
+  //       // La solicitud no se realizó correctamente
+  //       alert("Ocurrió un error al actualizar el registro");
+  //     }
+  //   } catch (error) {
+  //     // Ocurrió un error
+  //     alert(error);
+  //   }
+  // }
+
+  async function update(id, datos) {
+    try {
+      const response = await fetch(`http://localhost:8081/bloque1/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(datos),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.status === 200) {
+        // La solicitud se realizó correctamente
+        alert("Registro actualizado correctamente");
+      } else {
+        // La solicitud no se realizó correctamente
+        alert("Ocurrió un error al actualizar el registro");
+      }
+    } catch (error) {
+      // Ocurrió un error
+      alert(error);
+    }
+  }
+  const id = 123;
+const datos = {
+  ordenes: "nuevas ordenes",
+  horas: "nuevas horas",
+  defectos: "nuevos defectos",
+  opf: "nueva opf",
+};
+
+// update(id, datos);
+
+  
+  
+  
+  
+
 
   return (
     <div className="tabla-lineas">
@@ -170,7 +242,7 @@ function App() {
         </ModalBody>
         <ModalFooter>
 
-          <Button color="primary" onClick={() => insertar()}>
+          <Button color="primary" onClick={() => update(id, datos)}>
             Editar
           </Button>
 
