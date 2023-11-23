@@ -7,19 +7,10 @@ import Flow from "./components/Flow";
 import Kutter from "./components/Kutter";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import Update from './components/Update';
 import './App.css';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+
 
 function App() {
   const [data, setData] = useState([]);
@@ -41,6 +32,7 @@ function App() {
           <Route path="flow" element={<Flow />} />
           <Route path="Kutter" element={<Kutter />} />
           <Route path="login" element={<Login />} />
+          <Route path='/update/:id' element={<Update />}></Route>
         </Route>
       </Routes>
 
