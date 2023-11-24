@@ -35,28 +35,26 @@ function App() {
     });
   };
 
-  const mostrarModalEditar = (registro) => {
-    setRegistro(registro);
-    setForm({
-      linea: registro.linea,
-      ordenes: registro.ordenes,
-      horas: registro.horas,
-      defectos: registro.defectos,
-      opf: registro.opf,
-    });
-    setModalEditar(true);
-  };
 
   const ocultarModalEditar = () => {
     setModalEditar(false);
   };
 
 
-  const actualizarRegistro = (updatedRecord) => {
+
+  const actualizarRegistro = () => {
     // Update the record in the database using the updated record data
-    // ...
-    ocultarModalEditar();
+    const updatedRecord = {
+      linea: form.linea,
+      ordenes: form.ordenes,
+      horas: form.horas,
+      defectos: form.defectos,
+      opf: form.opf,
+    };
+    update(registro.id, updatedRecord);
   };
+
+
 
   const handleInsert = (nuevoRegistro) => {
     setData([...data, nuevoRegistro]);
@@ -75,76 +73,58 @@ function App() {
     handleInsert(nuevoRegistro);
   };
 
-  // async function update() {
-  //   const id = document.getElementById("id").value;
-  //   const data = {
-  //     ordenes: document.getElementById("ordenes").value,
-  //     horas: document.getElementById("horas").value,
-  //     defectos: document.getElementById("defectos").value,
-  //     opf: document.getElementById("opf").value,
-  //   };
-  
-  //   try {
-  //     const response = await fetch(`http://localhost:8081/bloque1/${id}`, {
-  //       method: "PUT",
-  //       body: JSON.stringify(data),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  
-  //     const value = response?.status;
-  
-  //     if (value === 200) {
-  //       // La solicitud se realizó correctamente
-  //       alert("Registro actualizado correctamente");
-  //     } else {
-  //       // La solicitud no se realizó correctamente
-  //       alert("Ocurrió un error al actualizar el registro");
-  //     }
-  //   } catch (error) {
-  //     // Ocurrió un error
-  //     alert(error);
-  //   }
-  // }
+
+
 
   async function update(id, datos) {
     try {
-      const response = await fetch(`http://localhost:8081/bloque1/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(datos),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await axios.put(`http://localhost:8081/bloque1/${id}`, {
+        ordenes: datos.ordenes,
+        horas: datos.horas,
+        defectos: datos.defectos,
+        opf: datos.opf,
       });
-  
+
       if (response.status === 200) {
-        // La solicitud se realizó correctamente
-        alert("Registro actualizado correctamente");
+        // The record was updated successfully
+        console.log('Record updated successfully');
       } else {
-        // La solicitud no se realizó correctamente
-        alert("Ocurrió un error al actualizar el registro");
+        // An error occurred during the update
+        console.error('Error updating record:', response.status);
       }
     } catch (error) {
-      // Ocurrió un error
-      alert(error);
+      console.error('Error updating record:', error);
     }
   }
-  const id = 123;
-const datos = {
-  ordenes: "nuevas ordenes",
-  horas: "nuevas horas",
-  defectos: "nuevos defectos",
-  opf: "nueva opf",
-};
 
-// update(id, datos);
 
-  
-  
-  
-  
 
+
+
+
+  // This code is responsible for showing the modal
+  function mostrarModalEditar(registro) {
+    // Set the form values to the values of the selected record
+    setForm({
+      linea: registro.linea,
+      ordenes: registro.ordenes,
+      horas: registro.horas,
+      defectos: registro.defectos,
+      opf: registro.opf,
+    });
+
+    // Open the modal
+    setModalEditar(true);
+  }
+
+
+
+  const datos = {
+    ordenes: "nuevas ordenes",
+    horas: "nuevas horas",
+    defectos: "nuevos defectos",
+    opf: "nueva opf",
+  };
 
   return (
     <div className="tabla-lineas">
@@ -188,7 +168,7 @@ const datos = {
           </div>
         </ModalHeader>
         <ModalBody>
-        <FormGroup>
+          <FormGroup>
             <label>Linea:</label>
             <input
               className="form-control"
@@ -241,17 +221,14 @@ const datos = {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
+  <Button color="primary" onClick={() => update(registro, datos)}>
+    Editar
+  </Button>
+  <Button color="primary" onClick={() => actualizarRegistro()}>
+    Cancelar
+  </Button>
+</ModalFooter>
 
-          <Button color="primary" onClick={() => update(id, datos)}>
-            Editar
-          </Button>
-
-          <Button color="primary" onClick={() => actualizarRegistro()}>
-            Cancelar
-          </Button>
-
-
-        </ModalFooter>
       </Modal>
     </div>
   );

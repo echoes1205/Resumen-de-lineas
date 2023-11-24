@@ -38,19 +38,44 @@ app.put("/bloque1/:id", (req, res) => {
       }
     });
   });
+
+// This code is responsible for updating the record in the database
+async function update(id, datos) {
+  try {
+    const response = await axios.put(`http://localhost:8081/bloque1/${id}`, {
+      
+      ordenes: datos.ordenes,
+      horas: datos.horas,
+      defectos: datos.defectos,
+      opf: datos.opf,
+    });
+
+    if (response.status === 200) {
+      // The record was updated successfully
+      return true;
+    } else {
+      // An error occurred during the update
+      return false;
+    }
+  } catch (error) {
+    console.error('Error updating record:', error);
+    return false;
+  }
+}
+
   
 
-// app.post("/bloque1/:id",(req,res)=>{
-//     // const {id}=req.params;
-//     const {ordenes, horas, defectos, opf}=req.body;
-//     const sql='insert into bloque1 values (?,?,?,?)';
-//     db.query(sql, (err,data)=>{
-//         if(err)
-//         res.json({err: err});
-//         else
-//         res.json(data);
-//     })
-// })
+app.post("/bloque1/:id",(req,res)=>{
+    // const {id}=req.params;
+    const {ordenes, horas, defectos, opf}=req.body;
+    const sql='insert into bloque1 values (?,?,?,?)';
+    db.query(sql, (err,data)=>{
+        if(err)
+        res.json({err: err});
+        else
+        res.json(data);
+    })
+})
 
 // insert
 app.post('/bloque1:id', (req, res) => {
