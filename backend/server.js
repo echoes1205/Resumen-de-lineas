@@ -25,6 +25,14 @@ app.get('/bloque1', (req, res)=> {
     })
 })
 
+app.get('/bloque2', (req, res)=> {
+  const sql = "SELECT * FROM bloque2";
+  db.query(sql, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+  })
+})
+
 //update
 app.put("/bloque1/:id", (req, res) => {
     const { id } = req.params;

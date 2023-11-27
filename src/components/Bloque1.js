@@ -4,14 +4,13 @@ import './Bloque1.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Table from 'react-bootstrap/Table';
 import { IconButton } from '@mui/material';
-import { Button, Container, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [data, setData] = useState([]);
-  const [registro, setRegistro] = useState(null);
   const [form, setForm] = useState({
-    linea: '',
+    id: '',
     ordenes: '',
     horas: '',
     defectos: '',
@@ -21,11 +20,16 @@ function App() {
   const [modalEditar, setModalEditar] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8081/bloque1')
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((err) => console.log(err));
+    fetchData();
   }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8081/bloque1');
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,96 +39,38 @@ function App() {
     });
   };
 
-
   const ocultarModalEditar = () => {
     setModalEditar(false);
   };
 
-
+  const mostrarModalEditar = (form) => {
+    setForm(form);
+    setModalEditar(true);
+  };
 
   const actualizarRegistro = () => {
-    // Update the record in the database using the updated record data
-    const updatedRecord = {
-      linea: form.linea,
+    update(form.id, {
       ordenes: form.ordenes,
       horas: form.horas,
       defectos: form.defectos,
       opf: form.opf,
-    };
-    update(registro.id, updatedRecord);
-  };
-
-
-
-  const handleInsert = (nuevoRegistro) => {
-    setData([...data, nuevoRegistro]);
+    });
     ocultarModalEditar();
   };
 
-  const insertar = () => {
-    const nuevoRegistro = {
-      linea: form.linea,
-      ordenes: form.ordenes,
-      horas: form.horas,
-      defectos: form.defectos,
-      opf: form.opf,
-    };
-
-    handleInsert(nuevoRegistro);
-  };
-
-
-
-
   async function update(id, datos) {
     try {
-      const response = await axios.put(`http://localhost:8081/bloque1/${id}`, {
-        ordenes: datos.ordenes,
-        horas: datos.horas,
-        defectos: datos.defectos,
-        opf: datos.opf,
-      });
-
+      const response = await axios.put(`http://localhost:8081/bloque1/${id}`, datos);
       if (response.status === 200) {
-        // The record was updated successfully
         console.log('Record updated successfully');
+        fetchData(); // Fetch updated data after successful update
       } else {
-        // An error occurred during the update
         console.error('Error updating record:', response.status);
       }
     } catch (error) {
       console.error('Error updating record:', error);
     }
   }
-
-
-
-
-
-
-  // This code is responsible for showing the modal
-  function mostrarModalEditar(registro) {
-    // Set the form values to the values of the selected record
-    setForm({
-      linea: registro.linea,
-      ordenes: registro.ordenes,
-      horas: registro.horas,
-      defectos: registro.defectos,
-      opf: registro.opf,
-    });
-
-    // Open the modal
-    setModalEditar(true);
-  }
-
-
-
-  const datos = {
-    ordenes: "nuevas ordenes",
-    horas: "nuevas horas",
-    defectos: "nuevos defectos",
-    opf: "nueva opf",
-  };
 
   return (
     <div className="tabla-lineas">
@@ -141,18 +87,16 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {data.map((registro) => (
-            <tr key={registro.id}>
-              <td>{registro.linea}</td>
-              <td>{registro.ordenes}</td>
-              <td>{registro.horas}</td>
-              <td>{registro.defectos}</td>
-              <td>{registro.opf}</td>
+
+          {data.map((form) => (
+            <tr key={form.id}>
+              <td>{form.linea}</td>
+              <td>{form.ordenes}</td>
+              <td>{form.horas}</td>
+              <td>{form.defectos}</td>
+              <td>{form.opf}</td>
               <td>
-                <IconButton
-                  aria-label="editar"
-                  onClick={() => mostrarModalEditar(registro)}
-                >
+                <IconButton aria-label="editar" onClick={() => mostrarModalEditar(form)}>
                   <EditIcon />
                 </IconButton>
               </td>
@@ -166,6 +110,7 @@ function App() {
           <div>
             <h3>Editar Registro</h3>
           </div>
+
         </ModalHeader>
         <ModalBody>
           <FormGroup>
@@ -189,6 +134,7 @@ function App() {
               value={form.ordenes}
             />
           </FormGroup>
+
           <FormGroup>
             <label>Horas:</label>
             <input
@@ -209,6 +155,7 @@ function App() {
               value={form.defectos}
             />
           </FormGroup>
+
           <FormGroup>
             <label>OPF:</label>
             <input
@@ -221,14 +168,14 @@ function App() {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-  <Button color="primary" onClick={() => update(registro, datos)}>
-    Editar
-  </Button>
-  <Button color="primary" onClick={() => actualizarRegistro()}>
-    Cancelar
-  </Button>
-</ModalFooter>
+          <Button color="primary" onClick={() => actualizarRegistro()}>
+            Editar
+          </Button>
 
+          <Button color="primary" onClick={() => ocultarModalEditar()}>
+            Cancelar
+          </Button>
+        </ModalFooter>
       </Modal>
     </div>
   );
