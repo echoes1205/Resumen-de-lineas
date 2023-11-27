@@ -7,11 +7,33 @@ app.use(cors())
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user:"root",
-    password:"",
-    database:"resumen-lineas"
-})
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "resumen-lineas"
+});
+
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const values = [username, password];
+
+  db.query(
+    "SELECT * FROM login WHERE username = ? AND password = ?",
+    values,
+    (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        if (result.length > 0) {
+          res.status(200).send(result[0]);
+        } else {
+          res.status(400).send("Usuario no encontrado");
+        }
+      }
+    }
+  );
+});
+
 
 app.get('/', (re, res)=> {
     return res.json("From backend side");
@@ -26,7 +48,7 @@ app.get('/bloque1', (req, res)=> {
 })
 
 app.get('/bloque2', (req, res)=> {
-  const sql = "SELECT * FROM bloque2";
+  const sql = "SELECT * FROM bloque2 ";
   db.query(sql, (err, data) => {
       if (err) return res.json(err);
       return res.json(data);
