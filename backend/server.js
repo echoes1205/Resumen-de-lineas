@@ -25,7 +25,11 @@ app.post("/login", (req, res) => {
         res.status(500).send(err);
       } else {
         if (result.length > 0) {
-          res.status(200).send(result[0]);
+          res.status(200).send({
+            "id": result[0].id,
+            "user": result[0].user,
+            "username": result[0].username
+          });
         } else {
           res.status(400).send("Usuario no encontrado");
         }

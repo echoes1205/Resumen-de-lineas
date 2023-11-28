@@ -11,12 +11,14 @@ import {
   MDBInput,
 } from 'mdb-react-ui-kit';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [body, setBody] = useState({
     username: '',
     password: ''  
   });
+
 
   const inputChange = ({ target }) => {
     const { name, value } = target
@@ -25,14 +27,17 @@ const Login = () => {
       [name]: value 
     })
   };
+  const navigate = useNavigate();
 
-  const onSubmit=() => {
+  const onSubmit=(event) => {
+    event.preventDefault();
     axios.post('http://localhost:8081/login', body)
     .then(({ data }) => {
-      console.log(data)
+      localStorage.setItem('auth', '"yes"')
+      navigate('/primerbloque')
     })
     .catch(({ response }) => {
-      console.log(response)
+      console.error(response.data.error)
     })
   }
 
