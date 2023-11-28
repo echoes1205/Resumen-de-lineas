@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 09:40 PM
+-- Generation Time: Nov 28, 2023 at 08:36 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -41,13 +41,13 @@ CREATE TABLE `bloque1` (
 --
 
 INSERT INTO `bloque1` (`id`, `linea`, `ordenes`, `horas`, `defectos`, `opf`) VALUES
-(1, '101A', 0, 0, 0, 'No'),
+(1, '101A', 25, 0, 0, ''),
 (2, '101B', 11, 2, 1, 'si'),
 (3, '102A', 32, 0, 0, ''),
 (4, '102B', 6, 56.5, 2, 'Si'),
 (5, '102C', 6, 66.4, 2, 'si'),
-(6, '103A', 26, 0, 0, ''),
-(7, '103B', 0, 0, 0, ''),
+(6, '103A', 25, 0, 0, ''),
+(7, '103B', 3, 0, 0, ''),
 (8, '103C', 0, 0, 0, ''),
 (9, '104A', 0, 0, 0, ''),
 (10, '104B', 69, 0, 0, ''),
@@ -101,7 +101,7 @@ CREATE TABLE `bloque2` (
 --
 
 INSERT INTO `bloque2` (`id`, `linea`, `ordenes`, `horas`, `defectos`, `opf`) VALUES
-(1, '126A', 0, 0, 0, ''),
+(1, '126A', 25, 56.2, 1, 'Si'),
 (2, '126B', 0, 0, 0, ''),
 (3, '127A', 0, 0, 0, ''),
 (4, '127B', 0, 0, 0, ''),
@@ -125,6 +125,36 @@ INSERT INTO `bloque2` (`id`, `linea`, `ordenes`, `horas`, `defectos`, `opf`) VAL
 (22, '136B', 0, 0, 0, ''),
 (23, '137A', 0, 0, 0, ''),
 (24, '137B', 0, 0, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flow`
+--
+
+CREATE TABLE `flow` (
+  `id` int(100) NOT NULL,
+  `linea` text NOT NULL,
+  `ordenes` int(100) NOT NULL,
+  `horas` float NOT NULL,
+  `defectos` int(100) NOT NULL,
+  `fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `flow`
+--
+
+INSERT INTO `flow` (`id`, `linea`, `ordenes`, `horas`, `defectos`, `fecha`) VALUES
+(1, '269', 8, 72.6, 1, '2023-11-29'),
+(2, '270', 0, 0, 0, '0000-00-00'),
+(3, '271', 0, 0, 0, '0000-00-00'),
+(4, '272', 0, 0, 0, '0000-00-00'),
+(5, '273', 0, 0, 0, '0000-00-00'),
+(6, '274', 0, 0, 0, '0000-00-00'),
+(7, '275', 0, 0, 0, '0000-00-00'),
+(8, '276', 0, 0, 0, '0000-00-00'),
+(9, '277', 0, 0, 0, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -163,6 +193,12 @@ ALTER TABLE `bloque2`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `flow`
+--
+ALTER TABLE `flow`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `login`
 --
 ALTER TABLE `login`
@@ -183,6 +219,12 @@ ALTER TABLE `bloque1`
 --
 ALTER TABLE `bloque2`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `flow`
+--
+ALTER TABLE `flow`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `login`
