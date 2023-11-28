@@ -61,6 +61,14 @@ app.get('/bloque2', (req, res)=> {
   })
 })
 
+app.get('/flow', (req, res)=> {
+  const sql = "SELECT * FROM flow";
+  db.query(sql, (err, data) => {
+      if (err) return res.json(err);
+      return res.json(data);
+  })
+})
+
 //update
 app.put("/bloque1/:id", (req, res) => {
     const { id } = req.params;
@@ -80,6 +88,19 @@ app.put("/bloque1/:id", (req, res) => {
     const { ordenes, horas, defectos, opf } = req.body;
     const sql = `UPDATE bloque2 SET ordenes = ?, horas = ?, defectos = ?, opf = ? WHERE id = ?`;
     db.query(sql, [ordenes, horas, defectos, opf, id], (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      } else {
+        res.send(result);
+      }
+    });
+  });
+
+  app.put("/flow/:id", (req, res) => {
+    const { id } = req.params;
+    const { ordenes, horas, defectos, fecha } = req.body;
+    const sql = `UPDATE flow SET ordenes = ?, horas = ?, defectos = ?, fecha = ? WHERE id = ?`;
+    db.query(sql, [ordenes, horas, defectos, fecha, id], (err, result) => {
       if (err) {
         res.send({ err: err });
       } else {
