@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Bloque1.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Table from 'react-bootstrap/Table';
 import { IconButton } from '@mui/material';
 import { Button, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const [data, setData] = useState([]);
@@ -18,10 +18,14 @@ function App() {
   });
 
   const [modalEditar, setModalEditar] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    checkAuthentication(); // Verifica la autenticación al cargar el componente
     fetchData();
   }, []);
+
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8081/bloque1');
@@ -29,6 +33,13 @@ function App() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+
+
+  const checkAuthentication = () => {
+    const isAuthenticated = localStorage.getItem('auth') === 'yes';
+    setIsLoggedIn(isAuthenticated);
   };
 
   const handleChange = (e) => {
@@ -55,10 +66,18 @@ function App() {
       defectos: form.defectos,
       opf: form.opf,
     });
+
     ocultarModalEditar();
+
   };
 
-  async function update(id, datos) {
+  const cerrarSesion = () => {
+    localStorage.clear();
+    setIsLoggedIn(false);
+    navigate('/primerbloque');
+  };
+
+  const update = async (id, datos) => {
     try {
       const response = await axios.put(`http://localhost:8081/bloque1/${id}`, datos);
       if (response.status === 200) {
@@ -70,9 +89,10 @@ function App() {
     } catch (error) {
       console.error('Error updating record:', error);
     }
-  }
+  };
 
   return (
+
     <div className="tabla-lineas">
       <h1 className="title">Reporte de Bloque 1</h1>
       <Table striped bordered hover>
@@ -83,7 +103,10 @@ function App() {
             <th>Horas</th>
             <th>Defectos</th>
             <th>OPF</th>
-            <th>Acciones</th>
+            {isLoggedIn && (
+
+              <th>Acciones</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -95,11 +118,13 @@ function App() {
               <td>{form.horas}</td>
               <td>{form.defectos}</td>
               <td>{form.opf}</td>
-              <td>
-                <IconButton aria-label="editar" onClick={() => mostrarModalEditar(form)}>
-                  <EditIcon />
-                </IconButton>
-              </td>
+              {isLoggedIn && (
+                <td>
+                  <IconButton aria-label="editar" onClick={() => mostrarModalEditar(form)}>
+                    <EditIcon />
+                  </IconButton>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

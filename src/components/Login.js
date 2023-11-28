@@ -1,48 +1,49 @@
-import React, { useState } from 'react';
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBRow,
-  MDBCol,
-  MDBIcon,
-  MDBInput,
-} from 'mdb-react-ui-kit';
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { MDBBtn, MDBContainer,MDBCard, MDBCardBody, MDBInput, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
-  const [body, setBody] = useState({
-    username: '',
-    password: ''  
-  });
+ const [body, setBody] = useState({
+   username: '',
+   password: '',
+ });
 
+ const navigate = useNavigate();
 
-  const inputChange = ({ target }) => {
-    const { name, value } = target
-    setBody({
-      ...body, 
-      [name]: value 
-    })
-  };
-  const navigate = useNavigate();
+ useEffect(() => {
+   // Verificar la autenticación al cargar el componente
+   const isAuthenticated = localStorage.getItem('auth') === 'yes';
+   if (isAuthenticated) {
+     navigate('/primerbloque');
+   }
+ }, [navigate]);
+ const inputChange = ({ target }) => {
+   const { name, value } = target;
+   setBody({
+     ...body,
+     [name]: value,
+   });
+ };
 
-  const onSubmit=(event) => {
-    event.preventDefault();
-    axios.post('http://localhost:8081/login', body)
-    .then(({ data }) => {
-      localStorage.setItem('auth', '"yes"')
-      navigate('/primerbloque')
-    })
-    .catch(({ response }) => {
-      console.error(response.data.error)
-    })
-  }
+ 
+ const onSubmit = (event) => {
+   event.preventDefault();
+   axios.post('http://localhost:8081/login', body)
+     .then(({ data }) => {
+       localStorage.setItem('auth', 'yes');
+       navigate('/primerbloque');
+       window.location.reload(true);
+       
 
-  return (
-    <MDBContainer className="my-5">
+     })
+     .catch(({ response }) => {
+       console.error(response.data.error);
+     });
+ };
+ return (
+<MDBContainer className="my-5">
       <MDBCard style={{ height: '760px' }}>
         <MDBRow
           className="g-0"
@@ -85,27 +86,13 @@ const Login = () => {
               <MDBBtn className="mb-4 px-5" color="dark" size="lg" onClick={onSubmit}>
                 Iniciar
               </MDBBtn>
-              {/* <a className="small text-muted" href="#!">Forgot password?</a> */}
-              <p
-                className="mb-5 pb-lg-2"
-                style={{ color: '#393f81' }}
-              >
-                Don't have an account?{' '}
-                <a href="#!" style={{ color: '#393f81' }}>
-                  Register here
-                </a>
-              </p>
-
-              {/* <div className='d-flex flex-row justify-content-start'>
-                <a href="#!" className="small text-muted me-1">Terms of use.</a>
-                <a href="#!" className="small text-muted">Privacy policy</a>
-              </div> */}
+         
+           
             </MDBCardBody>
           </MDBCol>
         </MDBRow>
       </MDBCard>
     </MDBContainer>
-  );
+ );
 };
-
 export default Login;
