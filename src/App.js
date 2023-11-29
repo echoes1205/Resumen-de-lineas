@@ -10,20 +10,10 @@ import Login from "./components/Login";
 
 import './App.css';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+
 
 function App() {
-  const [data, setData] = useState([]);
+  const [setData] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8081/bloque1')
@@ -36,12 +26,13 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="primerbloque" element={<Bloque1 />} />
-          <Route path="segundobloque" element={<Bloque2 />} />
-          <Route path="home" element={<Home />} />
-          <Route path="flow" element={<Flow />} />
-          <Route path="Kutter" element={<Kutter />} />
-          <Route path="login" element={<Login />} />
+        <Route index element={<Bloque1 />} />
+        <Route path="primerbloque" element={<Bloque1 />} />
+        <Route path="segundobloque" element={<Bloque2 />} />
+        <Route path="home" element={<Home />} />
+        <Route path="flow" element={<Flow />} />
+        <Route path="kutter" element={<Kutter />} />
+        <Route path="login" element={<Login />} />
         </Route>
       </Routes>
 

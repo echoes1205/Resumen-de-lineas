@@ -14,7 +14,7 @@ function App() {
     ordenes: '',
     horas: '',
     defectos: '',
-    opf: '',
+    fecha: new Date(),
   });
 
   const [modalEditar, setModalEditar] = useState(false);
@@ -29,13 +29,14 @@ function App() {
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8081/bloque2');
-      setData(response.data);
+      setData(response.data.map((item) => ({
+        ...item,
+        fecha: new Date(item.fecha), // Convert string date to Date object
+      })));
     } catch (error) {
       console.log(error);
     }
   };
-
-
 
   const checkAuthentication = () => {
     const isAuthenticated = localStorage.getItem('auth') === 'yes';
@@ -44,9 +45,10 @@ function App() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const updatedValue = name === 'fecha' ? new Date(value) : value;
     setForm({
       ...form,
-      [name]: value,
+      [name]: updatedValue,
     });
   };
 
@@ -64,17 +66,11 @@ function App() {
       ordenes: form.ordenes,
       horas: form.horas,
       defectos: form.defectos,
-      opf: form.opf,
+      fecha: form.fecha.toISOString(),
     });
 
     ocultarModalEditar();
 
-  };
-
-  const cerrarSesion = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-    navigate('/primerbloque');
   };
 
   const update = async (id, datos) => {
@@ -102,7 +98,7 @@ function App() {
             <th>Ordenes</th>
             <th>Horas</th>
             <th>Defectos</th>
-            <th>OPF</th>
+            <th>Fecha</th>
             {isLoggedIn && (
 
               <th>Acciones</th>
@@ -117,7 +113,8 @@ function App() {
               <td>{form.ordenes}</td>
               <td>{form.horas}</td>
               <td>{form.defectos}</td>
-              <td>{form.opf}</td>
+              <td>{form.fecha.toLocaleDateString()}</td>
+              
               {isLoggedIn && (
                 <td>
                   <IconButton aria-label="editar" onClick={() => mostrarModalEditar(form)}>
@@ -182,15 +179,23 @@ function App() {
           </FormGroup>
 
           <FormGroup>
-            <label>OPF:</label>
+            <label>Fecha:</label>
             <input
               className="form-control"
-              name="opf"
-              type="text"
-              onChange={handleChange}
-              value={form.opf}
+              name="fecha"
+              type="date"
+              onChange={(e) => {
+                const selectedDate = new Date(e.target.value);
+                setForm({
+                  ...form,
+                  fecha: selectedDate,
+                });
+              }}
+              value={form.fecha.today}
             />
           </FormGroup>
+
+
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={() => actualizarRegistro()}>
@@ -206,3 +211,10 @@ function App() {
   );
 }
 export default App;
+
+
+
+
+
+
+

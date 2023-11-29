@@ -64,7 +64,7 @@ const Login = () => {
 
               <MDBInput
                 wrapperClass="mb-4"
-                label="Username"
+                label="Usuario"
                 id="formControlLg"
                 type="email"
                 size="lg"
@@ -74,7 +74,7 @@ const Login = () => {
               />
               <MDBInput
                 wrapperClass="mb-4"
-                label="Password"
+                label="Contraseña"
                 id="formControlRg"
                 type="password"
                 size="lg"

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/Edit';
-import { Button } from 'reactstrap';
-import { IconButton } from '@mui/material';
+import { Outlet, Link, useNavigate } from 'react-router-dom'; 
 import './Layout.css';
 export const Layout = () => {
   const navigate = useNavigate();
@@ -20,7 +17,7 @@ export const Layout = () => {
   return (
     <div>
       <nav className='navbar navbar-expand-lg bg-body-tertiary'>
-        <Link to='/'>
+        <Link to='/primerbloque'>
           <img className='navbar-brand'
             src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Cardinal_Health_Logo.svg/2560px-Cardinal_Health_Logo.svg.png' /> </Link>
 
