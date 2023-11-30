@@ -21,17 +21,17 @@ export const Layout = () => {
           <img className='navbar-brand'
             src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Cardinal_Health_Logo.svg/2560px-Cardinal_Health_Logo.svg.png' /> </Link>
 
-        <div className='navbar-nav'>
-          <Link to='/primerbloque' className='nav-link'>
+        <div className='navbar-nav' >
+          <Link to='/primerbloque' className='nav-link' style={{ color: 'black' }}>
             Bloque 1
           </Link>
-          <Link to='/segundobloque' className='nav-link'>
+          <Link to='/segundobloque' className='nav-link' style={{ color: 'black' }} >
             Bloque 2
           </Link>
-          <Link to='/flow' className='nav-link'>
+          <Link to='/flow' className='nav-link' style={{ color: 'black' }}>
             Flow
           </Link>
-          <Link to='/kutter' className='nav-link'>
+          <Link to='/kutter' className='nav-link' style={{ color: 'black' }}>
             Kutter
           </Link>
 
@@ -39,7 +39,7 @@ export const Layout = () => {
         </div>
         <div className="navbar-nav">
           {!isLoggedIn && (
-            <Link to="/login" className="nav-link">
+            <Link to="/login" className="nav-link" style={{ color: 'black' }}>
               Iniciar sesión
             </Link>
           )}
